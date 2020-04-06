@@ -293,9 +293,9 @@ export class TrackingService {
             }, (this.discoverableTime + 5) * 1000);
         } else if (this.platform.is('ios')) {
             this.listDiscoveredDevices();
-            this.bluetoothIntRef = setInterval(() => {
+            /*this.bluetoothIntRef = setInterval(() => {
                 this.listDiscoveredDevices();
-            }, this.bluetoothListTimeout * 1000);
+            }, this.bluetoothListTimeout * 1000);*/
         }
     }
 
