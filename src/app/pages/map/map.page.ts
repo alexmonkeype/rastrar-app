@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {
     GoogleMaps,
     GoogleMap,
-    GoogleMapOptions,
-    Marker,
-    LatLng
+    GoogleMapOptions
 } from '@ionic-native/google-maps';
 import {TrackingService} from '../../services/tracking.service';
 import {Platform, ToastController, AlertController} from '@ionic/angular';
@@ -16,12 +14,10 @@ import {BarcodeScanner} from '@ionic-native/barcode-scanner/ngx';
     styleUrls: ['./map.page.scss'],
 })
 export class MapPage implements OnInit {
-    private trackingSub;
     private trackingOn = false;
 
     colorTrackingButton = 'default';
     map: GoogleMap;
-    lastMarker: Marker;
 
     constructor(
         private platform: Platform,
@@ -35,6 +31,9 @@ export class MapPage implements OnInit {
                 this.trackingService.isActivated()
                     .then(activated => {
                         this.trackingOn = activated;
+                        if (this.map) {
+                            this.map.setMyLocationEnabled(this.trackingOn);
+                        }
                         this.buttonActionStatus();
                     });
                 if (this.trackingService.firstTime) {
@@ -48,18 +47,6 @@ export class MapPage implements OnInit {
         this.trackingService.getCurrentLocation()
             .then(location => {
                 this.showMap(location);
-                this.trackingService.getMatchesLastHours(4)
-                    .then(records => {
-                        // console.log('showMarkers', 'start');
-                        this.showMarkers(records);
-                        // console.log('showMarkers', 'end');
-
-                        this.trackingSub = this.trackingService.register
-                            .subscribe(position => {
-                                // console.log('trackingService', 'register');
-                                this.addMarker(position.latitude, position.longitude);
-                            });
-                    });
             });
     }
 
@@ -68,7 +55,7 @@ export class MapPage implements OnInit {
             controls: {
                 compass: false,
                 zoom: false,
-                myLocation: true,
+                myLocation: this.trackingOn,
                 myLocationButton: false,
                 mapToolbar: false
             },
@@ -85,62 +72,6 @@ export class MapPage implements OnInit {
         this.map = GoogleMaps.create('map_canvas', mapOptions);
     }
 
-    showMarkers(records) {
-        // console.log('showMarkers', records);
-        let icon = 'green';
-        for (const record of records) {
-            this.addMarker(record.userLat, record.userLong, icon);
-            icon = 'red';
-        }
-    }
-
-    addMarker(latitude, longitude, icon = 'red') {
-        if (!this.map || !latitude || !longitude) {
-            return;
-        }
-
-        let previousPosition = null;
-        if (this.lastMarker) {
-            previousPosition = this.lastMarker.getPosition();
-            if (!this.lastMarker.get('first')) {
-                this.lastMarker.remove();
-                this.map.addMarkerSync({
-                    icon: 'orange',
-                    position: previousPosition
-                });
-            }
-        }
-
-        const marker: Marker = this.map.addMarkerSync({
-            icon,
-            position: {
-                lat: latitude,
-                lng: longitude
-            },
-            first: (icon === 'green')
-        });
-
-        if (previousPosition === null) {
-            previousPosition = marker.getPosition();
-        }
-
-        this.map.addPolyline(
-            {
-                points: [previousPosition, marker.getPosition()],
-                visible: true,
-                color: '#E9505B',
-                width: 4
-            })
-            .then((res) => {
-                // this.previousPosition = pos;
-            })
-            .catch(reason => {
-                console.error('addPolyline', reason);
-            });
-
-        this.lastMarker = marker;
-    }
-
     onSwitchTracking() {
         this.trackingOn = !this.trackingOn;
         if (this.trackingOn) {
@@ -149,6 +80,9 @@ export class MapPage implements OnInit {
         } else {
             this.trackingService.stopTracking()
                 .then();
+        }
+        if (this.map) {
+            this.map.setMyLocationEnabled(this.trackingOn);
         }
         this.buttonActionStatus();
     }
