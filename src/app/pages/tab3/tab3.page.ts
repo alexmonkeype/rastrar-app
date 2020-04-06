@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {LoadingController, NavController} from '@ionic/angular';
+import {AlertController, LoadingController, NavController} from '@ionic/angular';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 import {File, IWriteOptions} from '@ionic-native/file/ngx';
 import {TrackingService} from '../../services/tracking.service';
@@ -21,6 +21,7 @@ export class Tab3Page implements OnInit {
         private navController: NavController,
         private socialSharing: SocialSharing,
         private loadingController: LoadingController,
+        public alertController: AlertController,
         private file: File,
         private authService: AuthService,
         private trackingService: TrackingService
@@ -120,6 +121,35 @@ export class Tab3Page implements OnInit {
     }
 
     onLogOut() {
+        this.confirmLogOut()
+            .then();
+    }
+
+    async confirmLogOut() {
+        const alert = await this.alertController.create({
+            header: 'Borrar mis rastros',
+            message: '<p>Todos tus rastros serán eliminados de este dispositivo móvil para siempre y no podrán recuperarse.</p> ' +
+                '<p>¿Estás seguro que deseas borrar todos tus rastros?</p>',
+            buttons: [
+                {
+                    text: 'No borrar',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                    }
+                }, {
+                    text: 'Borrar',
+                    handler: () => {
+                        this.logout();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    logout() {
         this.authService.logOut()
             .then(() => {
                 this.trackingService.stopTracking()
