@@ -126,7 +126,7 @@ export class TrackingService {
             debug: false, //  enable this hear sounds for background-geolocation life-cycle.
             stopOnTerminate: false, // enable this to clear background location settings when the app terminates
             notificationTitle: 'Rastrar está corriendo en segundo plano',
-            notificationText: '¡Cortemos la cadena!',
+            notificationText: 'Tus rastro está siendo guardado.',
             notificationIconLarge: '@mipmap/ic_launcher',
             notificationIconSmall: '@mipmap/ic_launcher',
             maxLocations: 30

@@ -11,7 +11,11 @@ ion-label {
 
 ion-button {
   font-size: 14px;
-  text-transform: capitalize;
+  text-transform: lowercase;
+
+  ion-label::first-letter {
+    text-transform: uppercase;
+  }
 }
 
 .actions ion-button, .share-button {

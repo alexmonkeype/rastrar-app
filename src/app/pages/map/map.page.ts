@@ -121,15 +121,14 @@ export class MapPage implements OnInit {
 
     async showInfo() {
         const html = '<p><ion-icon name="location-outline"></ion-icon>&nbsp;&nbsp;' +
-            'Registrar mi rastro <b>automáticamente</b> por GPS. <i>Media precisión</i></p>' +
+            'Se guarda mi ubicación <b>automáticamente</b> por GPS.</p>' +
             '<p><ion-icon name="bluetooth-outline"></ion-icon>&nbsp;&nbsp;' +
-            'Registrar mi rastro <b>automáticamente</b> por Bluetooth™. <i>Alta precisión</i>.</p>' +
+            'Se guarda mis cruces con otros usuarios <b>automáticamente</b> por Bluetooth™.</p>' +
             '<p><ion-icon name="qr-code-outline"></ion-icon>&nbsp;&nbsp;' +
-            'Registrar mi rastro <b>manualmente</b> escaneando un QR. <i>Muy alta precisión</i>.</p>';
+            'Guardo mi rastro <b>manualmente</b> escaneando un QR.</p>';
 
         const alert = await this.alertController.create({
-            header: 'Herramientras para mi rastro',
-            // subHeader: 'Subtitle',
+            header: '¿Cómo se guarda mi rastro?',
             message: html,
             buttons: ['OK'],
             cssClass: 'alert'

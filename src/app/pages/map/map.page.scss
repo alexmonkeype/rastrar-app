@@ -46,8 +46,12 @@ ion-button {
     right: 66px;
     bottom: 62px;
     color: #999999;
-    text-transform: capitalize;
+    text-transform: lowercase;
     --ion-color-base: #ffffff;
+
+    span::first-letter {
+      text-transform: uppercase;
+    }
 
     .on {
       display: none;

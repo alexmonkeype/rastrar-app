@@ -73,12 +73,18 @@ export class Tab1Page implements OnInit, OnDestroy {
     }
 
     renderRecord(record) {
-        if (record.toUserID !== '') {
-            return '<p><strong>Contacto con ' + this.getShortId(record.toUserID) + ' vía ' +
-                record.type + '</strong></p>' +
+        if (record.type === 'BT') {
+            return '<p><strong>Se guardó tu cruce con ' + this.getShortId(record.toUserID) + ' vía Bluetooth™.</strong></p>' +
+                '<p>' + record.txTimestamp + '</p>';
+        } else if (record.type === 'QR') {
+            return '<p><strong>Se guardó tu cruce con ' + this.getShortId(record.toUserID) + ' vía QR.</strong></p>' +
+                '<p>' + record.txTimestamp + '</p>';
+        } else if (record.type === 'QR-L') {
+            return '<p><strong>Se guardo tu ubicación via QR.</strong><p/>' +
                 '<p>' + record.txTimestamp + '</p>';
         } else {
-            return '<p><strong>Se guardo su posición.</strong><p/><p>' + record.txTimestamp + '</p>';
+            return '<p><strong>Se guardo tu ubicación via GPS.</strong><p/>' +
+                '<p>' + record.txTimestamp + ' via GPS.</p>';
         }
     }
 
