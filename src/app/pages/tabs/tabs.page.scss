@@ -1,0 +1,7 @@
+:host ion-tab-button {
+  color: #999999;
+
+  &.tab-selected {
+    color: var(--ion-color-primary);
+  }
+}

@@ -1,0 +1,88 @@
+#map_canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  position: absolute;
+  left: 20px;
+  top: 12px;
+  background: #FFFFFF;
+  padding: 10px 22px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+
+  ion-img {
+    width: 71px;
+    height: 25px;
+  }
+}
+
+ion-button {
+  position: absolute;
+  --background: #FFFFFF;
+  --border-radius: 5px;
+  height: 36px;
+
+  &.info-button, &.qr-scan-button {
+    width: 36px;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+
+  &.info-button {
+    right: 20px;
+    top: 12px;
+  }
+
+  &.qr-scan-button {
+    right: 20px;
+    bottom: 62px;
+  }
+
+  &.tracking-button {
+    right: 66px;
+    bottom: 62px;
+    color: #999999;
+    text-transform: capitalize;
+    --ion-color-base: #ffffff;
+
+    .on {
+      display: none;
+    }
+
+    ion-icon {
+      -webkit-mask-image: url('../../../assets/icon/tracking.svg');
+      width: 16px;
+      height: 16px;
+      background-color: #999999;
+    }
+
+    &.ion-color-primary {
+      --ion-color-base: #ffffff !important;
+      --ion-color-contrast: var(--ion-color-primary) !important;
+
+      ion-icon {
+        background-color: var(--ion-color-primary);
+      }
+
+      .blink {
+        animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+      }
+
+      .on {
+        display: inline-block;
+      }
+
+      .off {
+        display: none;
+      }
+    }
+  }
+}
+@keyframes blinker {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

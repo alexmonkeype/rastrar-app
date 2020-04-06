@@ -1,0 +1,50 @@
+<ion-content>
+    <div class="white-logo"></div>
+    <ion-slides  pager="true" [options]="slideOpts">
+        <ion-slide class="single-slide">
+            <div class="text-content">
+                <div class="main-title">
+                    Ésta es una
+                    <h1>aplicación para autorastreo.</h1>
+                </div>
+                <p class="description">Te permite guardar de manera anónima un historial de tus rastros de lugares visitados y cruces con otros usuarios de RASTRAR en tus últimos 45 días.</p>
+            </div>
+        </ion-slide>
+        <ion-slide class="single-slide">
+            <div class="text-content">
+                <img class="slide-icon" src="assets/img/slider/anonymous.svg" alt="Privacidad">
+                <div class="main-title">
+                    <h2>Privacidad</h2>
+                </div>
+                <p class="description">Tu rastro es información <b>privada</b>. Se mantendrá en tu dispositivo móvil hasta que desees compartirla.</p>
+                <p class="description">Para dejar de guardar tus rastros, puedes apagar o encender el rastreo automático cuando lo desees.</p>
+            </div>
+        </ion-slide>
+        <ion-slide class="single-slide">
+            <div class="text-content">
+                <img class="slide-icon" src="assets/img/slider/qr.svg" alt="Fácil Uso">
+                <div class="main-title">
+                    <h2>Fácil Uso</h2>
+                </div>
+                <p class="description">Solo con mantener tu GPS y Bluetooth™ encendidos, tus rastros se guardarán <b>automáticamente</b>.</p>
+                <p class="description">Escaneando códigos QR de personas o lugares, guardarás tus rastros <b>manualmente</b>.</p>
+            </div>
+        </ion-slide>
+        <ion-slide class="single-slide">
+            <div class="text-content">
+                <img class="slide-icon" src="assets/img/slider/alert.svg" alt="Fácil Uso">
+                <div class="main-title">
+                    <h2>Privacidad</h2>
+                </div>
+                <p class="description">Para dejar de guardar tus rastros, puedes apagar o encender el rastreo automático cuando lo desees.</p>
+            </div>
+            <ion-button class="start-button" color="light" size="large" (click)="start()">
+                <ion-label>Comenzar</ion-label>
+            </ion-button>
+        </ion-slide>
+    </ion-slides>
+    <div class="background">
+        <div class="layer-image"></div>
+        <div class="layer-color"></div>
+    </div>
+</ion-content>

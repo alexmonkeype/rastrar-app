@@ -1,0 +1,7 @@
+{
+  "name": "Rastrar",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

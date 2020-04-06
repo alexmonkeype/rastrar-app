@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title><ion-img src="assets/logo.svg"></ion-img></ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+    <ion-item lines="none" class="ion-text-wrap">
+        <ion-label>
+            <h2>Copia de seguridad</h2>
+            <p>Crea una copia de seguridad de tus datos</p>
+        </ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label><i>La copia de seguridad aún está disponible.</i></ion-label>
+        <ion-checkbox checked="false" disabled="true"></ion-checkbox>
+    </ion-item>
+    <ion-item class="actions">
+        <ion-button size="large" fill="clear" disabled="true">
+            <ion-icon src="assets/icon/import.svg" slot="end"></ion-icon>
+            <ion-label>Importar rastro</ion-label>
+        </ion-button>
+        <ion-button size="large" expand="block" (click)="onExport()" fill="clear">
+            <ion-icon src="assets/icon/export.svg" slot="end"></ion-icon>
+            <ion-label>Campartir mi rastro</ion-label>
+        </ion-button>
+    </ion-item>
+    <ion-button class="share-button" size="large" expand="block" (click)="shareWhatsApp()" fill="clear" expand="full">
+        <ion-icon name="share-social" slot="end"></ion-icon>
+        <ion-label>Invita a tus amigos a usar esta aplicación</ion-label>
+    </ion-button>
+    <ion-button class="logout-button" size="large" expand="full" (click)="onLogOut()" fill="clear">
+        <ion-label>Borrar todos mis rastros</ion-label>
+    </ion-button>
+    <ion-label>
+        <p class="ion-text-center">Ratrar © 2020.</p>
+        <p class="ion-text-center">Diseñado y desarrollado por Monkey.</p>
+    </ion-label>
+</ion-content>

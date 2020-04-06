@@ -1,0 +1,29 @@
+.swiper-pagination-bullets .swiper-pagination-bullet {
+    width: 7px;
+    height: 7px;
+    border-radius: 50px;
+    transition: all 250ms ease-in-out;
+    margin: 0 3.5px;
+}
+
+.swiper-pagination-bullets .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    width: 35px;
+}
+
+/*.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {*/
+/*bottom: 0px;*/
+/*}*/
+.qr.success img {
+    border: 4px solid #2dd36f;
+}
+.qr.danger img {
+    border: 4px solid #eb445a;
+}
+.qr #qrImg {
+    max-width: 160px;
+    height: auto;
+}
+
+.alert-sub-title.sc-ion-alert-md, .alert-title.sc-ion-alert-md {
+    --ion-text-color: var(--ion-color-primary);
+}

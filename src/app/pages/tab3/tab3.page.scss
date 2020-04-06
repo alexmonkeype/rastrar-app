@@ -1,0 +1,28 @@
+ion-header ion-img {
+  height: 25px;
+}
+
+ion-label {
+  h2, p {
+    --color: #666666;
+    color: #666666;
+  }
+}
+
+ion-button {
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.actions ion-button, .share-button {
+  width: calc(100% - 20px);
+  --color: #666666;
+}
+
+.share-button {
+  margin: 16px 0;
+}
+
+.logout-button {
+  margin: 24px 0;
+}
