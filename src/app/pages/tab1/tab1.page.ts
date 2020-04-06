@@ -61,7 +61,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         const ref = this;
         this.trackingService.getMatches(5)
             .then((values: any) => {
-                console.log('values', values);
+                // console.log('values', values);
                 ref.records.splice(0, ref.records.length);
                 setTimeout(() => {
                     Array.prototype.push.apply(ref.records, values);
@@ -84,7 +84,7 @@ export class Tab1Page implements OnInit, OnDestroy {
                 '<p>' + record.txTimestamp + '</p>';
         } else {
             return '<p><strong>Se guardo tu ubicación via GPS.</strong><p/>' +
-                '<p>' + record.txTimestamp + ' via GPS.</p>';
+                '<p>' + record.txTimestamp + '</p>';
         }
     }
 

@@ -30,6 +30,7 @@ export class TrackingService {
 
     public register: BehaviorSubject<any> = new BehaviorSubject<any>([]);
     public firstTime = false;
+    public migrating = false;
 
     constructor(
         private platform: Platform,
@@ -45,6 +46,22 @@ export class TrackingService {
                     hidden: false,
                     silent: true
                 });
+                this.backgroundMode.on('activate')
+                    .subscribe(() => {
+                        // console.log('backgroundMode', 'activate');
+                        if (!this.migrating) {
+                            this.migrate()
+                                .then();
+                        }
+                    });
+                this.backgroundMode.on('deactivate')
+                    .subscribe(() => {
+                        // console.log('backgroundMode', 'deactivate');
+                        if (!this.migrating) {
+                            this.migrate()
+                                .then();
+                        }
+                    });
 
                 this.bluetoothSub = this.bluetoothSerial.setDeviceDiscoveredListener()
                     .subscribe(device => {
@@ -113,13 +130,8 @@ export class TrackingService {
 
     private config() {
         const config: BackgroundGeolocationConfig = {
-            // locationProvider: BackgroundGeolocationLocationProvider.DISTANCE_FILTER_PROVIDER,
-            // activityType: 'Fitness',
             saveBatteryOnBackground: true,
             startOnBoot: true,
-            // desiredAccuracy: 10,
-            // stationaryRadius: 20,
-            // distanceFilter: 30,
             desiredAccuracy: 10,
             distanceFilter: 30,
             stationaryRadius: 50,
@@ -142,7 +154,11 @@ export class TrackingService {
 
                 this.subscription = ref.backgroundGeolocation.on(BackgroundGeolocationEvents.location)
                     .subscribe((location: BackgroundGeolocationResponse) => {
-                        ref.registerPosition(location);
+                        ref.registerPosition(location)
+                            .then(() => {
+                                ref.backgroundGeolocation.deleteLocation(location.id)
+                                    .then();
+                            });
 
                         // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
                         // and the background-task may be completed.  You must do this regardless if your operations are successful or not.
@@ -154,6 +170,38 @@ export class TrackingService {
                     });
 
             });
+    }
+
+    private migrate(): Promise<any> {
+        // console.log('migrating...');
+        this.migrating = true;
+        return new Promise(resolve => {
+            const ref = this;
+            this.backgroundGeolocation.getLocations()
+                .then(locations => {
+                    // console.log('locations...', locations);
+                    let count = 0;
+                    const len = locations.length;
+                    for (const location of locations) {
+                        ref.registerPosition(location)
+                            .finally(() => {
+                                if (++count === len) {
+                                    this.register.next(null);
+                                }
+                            });
+                    }
+                    this.backgroundGeolocation.deleteAllLocations()
+                        .finally(() => {
+                            this.migrating = false;
+                            resolve();
+                        });
+                })
+                .catch(reason => {
+                    console.error('migrate', reason);
+                    this.migrating = false;
+                    resolve();
+                });
+        });
     }
 
     startTracking() {
@@ -202,7 +250,7 @@ export class TrackingService {
             .then();
     }
 
-    registerCode(code): Promise<any>  {
+    registerCode(code): Promise<any> {
         if (code.indexOf('stampingID:') === 0) {
             const stampingID = code.replace('stampingID:', '');
             return this.getLocationPostData('QR', stampingID);
@@ -254,17 +302,23 @@ export class TrackingService {
         return this.registerMatch(type, lat, lng, aUserTo, now);
     }
 
-    private registerPosition(location) {
+    private registerPosition(location): Promise<boolean> {
         // console.log('TrackingService', 'registerPosition', location);
-        if (location) {
-            const lat = location.latitude;
-            const lng = location.longitude;
+        return new Promise((resolve, reject) => {
+            if (location) {
+                const lat = location.latitude;
+                const lng = location.longitude;
 
-            this.postData('GPS', lat, lng, '')
-                .then(() => {
-                    this.register.next({latitude: lat, longitude: lng});
-                });
-        }
+                this.postData('GPS', lat, lng, '')
+                    .then(() => {
+                        this.register.next({latitude: lat, longitude: lng});
+                        resolve();
+                    })
+                    .catch(reason => reject(reason));
+            } else {
+                reject('Location is not valid.');
+            }
+        });
     }
 
     registerMatch(type: string, lat: number, lng: number, toUserID: string, txTimestamp: string) {

@@ -52,26 +52,7 @@ export class AppComponent {
                 // console.log('userID', (userID ? 'Exists' : 'Not exists'));
                 if (userID) {
                     ref.trackingService.setUserID(userID);
-                    ref.trackingService.requestPermissions()
-                        .then(() => {
-                            ref.trackingService.isActivated()
-                                .then(activated => {
-                                    if (activated) {
-                                        ref.trackingService.startTracking()
-                                            .then();
-                                    }
-                                });
-                        })
-                        .catch(reason => {
-                            console.error('requestPermissions', reason);
-                        })
-                        .finally(() => {
-                            ref.splashScreen.hide();
-                            ref.trackingService.clearOldMatches()
-                                .finally(() => {
-                                    ref.navController.navigateRoot('/dashboard').then();
-                                });
-                        });
+                    ref.requestPermissions();
                 } else {
                     ref.splashScreen.hide();
                     ref.navController.navigateRoot('/home').then();
@@ -79,6 +60,30 @@ export class AppComponent {
             })
             .catch(() => {
                 ref.splashScreen.hide();
+            });
+    }
+
+    private requestPermissions() {
+        const ref = this;
+        this.trackingService.requestPermissions()
+            .then(() => {
+                ref.trackingService.isActivated()
+                    .then(activated => {
+                        if (activated) {
+                            ref.trackingService.startTracking()
+                                .then();
+                        }
+                    });
+            })
+            .catch(reason => {
+                console.error('requestPermissions', reason);
+            })
+            .finally(() => {
+                ref.splashScreen.hide();
+                ref.trackingService.clearOldMatches()
+                    .finally(() => {
+                        ref.navController.navigateRoot('/dashboard').then();
+                    });
             });
     }
 }
