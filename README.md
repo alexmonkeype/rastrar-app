@@ -7,6 +7,14 @@ Este código puede ser utilizado por cualquier entidad gubernamental siempre que
 1. Respetar el anonimato de los datos.
 2. Todo el auto rastreo solo pueda ser entregado con autorización del titular. 
 
+## Capturas de pantalla
+
+<img src="screenshoots/intro.png" width="160">&nbsp;
+<img src="screenshoots/mapa.png" width="160">&nbsp;
+<img src="screenshoots/rastro.png" width="160">&nbsp;
+<img src="screenshoots/mi-qr.png" width="160">&nbsp;
+<img src="screenshoots/opciones.png" width="160">
+
 
 ## Requerimientos
 
