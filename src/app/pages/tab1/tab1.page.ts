@@ -16,6 +16,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     records = [];
     trackingOn = false;
     userId = '';
+    loadingRecords = false;
 
     constructor(
         private authService: AuthService,
@@ -58,6 +59,10 @@ export class Tab1Page implements OnInit, OnDestroy {
 
     loadRecords() {
         // console.log('loadRecords');
+        if (this.loadingRecords) {
+            return;
+        }
+        this.loadingRecords = true;
         const ref = this;
         this.trackingService.getMatches(5)
             .then((values: any) => {
@@ -65,10 +70,12 @@ export class Tab1Page implements OnInit, OnDestroy {
                 ref.records.splice(0, ref.records.length);
                 setTimeout(() => {
                     Array.prototype.push.apply(ref.records, values);
+                    ref.loadingRecords = false;
                 }, 1000);
             })
             .catch(reason => {
                 console.error('loadRecords reason', reason);
+                ref.loadingRecords = false;
             });
     }
 
