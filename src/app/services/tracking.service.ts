@@ -157,11 +157,8 @@ export class TrackingService {
 
                 this.subscription = ref.backgroundGeolocation.on(BackgroundGeolocationEvents.location)
                     .subscribe((location: BackgroundGeolocationResponse) => {
-                        ref.registerPosition(location)
-                            .then(() => {
-                                ref.backgroundGeolocation.deleteLocation(location.id)
-                                    .then();
-                            });
+                        this.migrate()
+                            .then();
 
                         // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
                         // and the background-task may be completed.  You must do this regardless if your operations are successful or not.
