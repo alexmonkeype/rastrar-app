@@ -154,6 +154,8 @@ export class Tab3Page implements OnInit {
             .then(() => {
                 this.trackingService.stopTracking()
                     .then();
+                this.trackingService.clearBgLocations()
+                    .then();
                 this.trackingService.setUserID(null);
                 this.navController.navigateRoot('/home').then();
             });

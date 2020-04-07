@@ -409,4 +409,8 @@ export class TrackingService {
     clearOldMatches() {
         return this.sqliteService.clearOldMatches();
     }
+
+    clearBgLocations() {
+        return this.backgroundGeolocation.deleteAllLocations();
+    }
 }
