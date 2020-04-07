@@ -64,7 +64,7 @@ export class MapPage implements OnInit {
                     lat: location.latitude,
                     lng: location.longitude
                 },
-                zoom: 18,
+                zoom: 16,
                 tilt: 0
             }
         };

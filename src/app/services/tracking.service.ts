@@ -132,16 +132,19 @@ export class TrackingService {
         const config: BackgroundGeolocationConfig = {
             saveBatteryOnBackground: true,
             startOnBoot: true,
-            desiredAccuracy: 10,
-            distanceFilter: 30,
+            desiredAccuracy: 0,
+            distanceFilter: 50,
             stationaryRadius: 50,
+            interval: 10000,
+            fastestInterval: 5000,
+            activitiesInterval: 10000,
+            maxLocations: 10000,
             debug: false, //  enable this hear sounds for background-geolocation life-cycle.
             stopOnTerminate: false, // enable this to clear background location settings when the app terminates
             notificationTitle: 'Rastrar está corriendo en segundo plano',
             notificationText: 'Tus rastro está siendo guardado.',
             notificationIconLarge: '@mipmap/ic_launcher',
-            notificationIconSmall: '@mipmap/ic_launcher',
-            maxLocations: 30
+            notificationIconSmall: '@mipmap/ic_launcher'
         };
         const ref = this;
         this.backgroundGeolocation.configure(config)
