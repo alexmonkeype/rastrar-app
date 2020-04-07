@@ -86,6 +86,7 @@ export class TrackingService {
                             .catch(() => {
                             })
                             .finally(() => {
+                                this.bluetoothSerial.setDiscoverable(this.discoverableTime);
                                 resolve();
                             });
                     } else {
@@ -356,7 +357,7 @@ export class TrackingService {
     private discoverUnpaired() {
         this.bluetoothSerial.discoverUnpaired()
             .then(value => {
-                console.log('discoverUnpaired', value);
+                // console.log('discoverUnpaired', value);
             })
             .catch(reason => {
                 console.error('discoverUnpaired', reason);
